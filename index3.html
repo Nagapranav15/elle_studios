@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+  <title>Elle Studio | Luxury Nail Art & Beauty Experience</title>
+  <!-- Tailwind + Fonts -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#c2637a", "primary-light": "#e8829a", "primary-deep": "#a04560", "primary-container": "#fde8ed",
+            secondary: "#8b65a8", "secondary-light": "#b08acc", "secondary-container": "#f0e6f8",
+            tertiary: "#b07850", "tertiary-container": "#f5e8d8",
+            surface: "#fdf8f5", "surface-variant": "#f5ede8",
+            "on-surface": "#2a1c20", "on-surface-variant": "#6b4f58",
+            "outline-variant": "#e8d0d8", "accent-gold": "#c9944a", "accent-rose": "#e8506a", "accent-lavender": "#9b72c8",
+          },
+          fontFamily: { serif: ["Cormorant Garamond", "serif"], body: ["DM Sans", "sans-serif"] },
+          animation: {
+            'float': 'float 6s ease-in-out infinite', 'float-slow': 'float 9s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite', 'shimmer': 'shimmer 2.5s linear infinite',
+            'spin-slow': 'spin 12s linear infinite', 'slide-up': 'slideUp 0.8s cubic-bezier(0.16,1,0.3,1) both',
+            'fade-in': 'fadeIn 1s ease both', 'marquee': 'marquee 18s linear infinite',
+          },
+          keyframes: {
+            float: { '0%,100%': {transform:'translateY(0px)'}, '50%': {transform:'translateY(-18px)'} },
+            pulseGlow: { '0%,100%': {opacity:'0.6','box-shadow':'0 0 30px rgba(194,99,122,0.3)'}, '50%': {opacity:'1','box-shadow':'0 0 60px rgba(194,99,122,0.7)'} },
+            shimmer: { '0%': {backgroundPosition:'-200% 0'}, '100%': {backgroundPosition:'200% 0'} },
+            slideUp: { '0%': {opacity:'0',transform:'translateY(40px)'}, '100%': {opacity:'1',transform:'translateY(0)'} },
+            fadeIn: { '0%': {opacity:'0'}, '100%': {opacity:'1'} },
+            marquee: { '0%': {transform:'translateX(0)'}, '100%': {transform:'translateX(-50%)'} },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #fdf8f5; color: #2a1c20; overflow-x: hidden; scroll-behavior: smooth; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #fdf8f5; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(#c2637a, #8b65a8); border-radius: 9px; }
+    #cursor-glow {
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(194,99,122,0.1) 0%, transparent 70%);
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%); transition: transform 0.08s ease;
+    }
+    .glass { background: rgba(255,255,255,0.45); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.5); }
+    .glass-dark { background: rgba(42,28,32,0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
+    .glass-pink { background: rgba(253,232,237,0.55); backdrop-filter: blur(16px); border: 1px solid rgba(232,130,154,0.2); }
+    .grad-text {
+      background: linear-gradient(135deg, #c2637a 0%, #8b65a8 40%, #c9944a 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .grad-btn {
+      background: linear-gradient(135deg, #c2637a 0%, #a04560 40%, #8b65a8 100%);
+      background-size: 200%; transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .grad-btn:hover { background-position: right center; transform: translateY(-3px); box-shadow: 0 16px 40px rgba(194,99,122,0.45); }
+    .grad-bg-hero { background: linear-gradient(160deg, #fde8ed 0%, #f5e6f8 35%, #fef4e8 70%, #e8f0fd 100%); }
+    .shimmer-line { height: 2px; background: linear-gradient(90deg, transparent, #c9944a, #c2637a, #8b65a8, #c9944a, transparent); background-size: 200%; animation: shimmer 2.5s linear infinite; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0; animation: orbAppear 1s ease forwards; }
+    @keyframes orbAppear { to { opacity: 0.18; } }
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-left.in { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-right.in { opacity: 1; transform: translateX(0); }
+    .service-card { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(4px); }
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 25px 40px rgba(194,99,122,0.15); }
+    .gallery-item { overflow: hidden; border-radius: 1.25rem; position: relative; aspect-ratio: 1/1; }
+    .gallery-item img { transition: transform 0.7s cubic-bezier(0.16,1,0.3,1); width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-overlay {
+      position: absolute; inset: 0; opacity: 0; background: linear-gradient(135deg, rgba(194,99,122,0.75), rgba(139,101,168,0.75));
+      display: flex; align-items: flex-end; padding: 1rem; transition: opacity 0.4s ease; border-radius: 1.25rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .marquee-track { display: flex; gap: 0; white-space: nowrap; animation: marquee 18s linear infinite; }
+    .product-card { transition: transform 0.4s ease, box-shadow 0.4s ease; background: white; border-radius: 1.5rem; overflow: hidden; }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 24px 40px rgba(194,99,122,0.12); }
+    .testimonial-card { transition: transform 0.3s ease, box-shadow 0.3s ease; background: white; border-radius: 2rem; }
+    .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 20px 35px rgba(194,99,122,0.08); }
+    .contact-link { transition: transform 0.2s ease, background 0.2s; }
+    .contact-link:hover { transform: translateX(6px); background: rgba(255,255,255,0.1); }
+    nav a { position: relative; }
+    nav a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1.5px; background: linear-gradient(90deg, #c2637a, #8b65a8); transition: width 0.3s ease; }
+    nav a:hover::after { width: 100%; }
+    #mobile-menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border-radius: 12px; background: rgba(194, 99, 122, 0.08); border: 1px solid rgba(194, 99, 122, 0.1); }
+    .hamburger-line { display: block; width: 24px; height: 2.5px; background: linear-gradient(90deg, #c2637a, #a04560); border-radius: 2px; transition: all 0.3s ease; }
+    #mobile-menu-btn.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translateY(9px); }
+    #mobile-menu-btn.active .hamburger-line:nth-child(2) { opacity: 0; transform: translateX(-8px); }
+    #mobile-menu-btn.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translateY(-9px); }
+    #mobile-menu {
+      position: fixed; top: 70px; left: 0; right: 0; background: rgba(253,248,245,0.98); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(194,99,122,0.2); max-height: 0; overflow: hidden; transition: max-height 0.4s ease; z-index: 40;
+    }
+    #mobile-menu:not(.hidden) { max-height: 480px; }
+    .ring-anim { animation: ring-spin 20s linear infinite; }
+    .ring-anim-rev { animation: ring-spin 14s linear infinite reverse; }
+    @keyframes ring-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .book-pulse { animation: bookPulse 2.2s ease-out infinite; }
+    @keyframes bookPulse { 0%,100%{box-shadow:0 0 0 0 rgba(194,99,122,0.4)} 70%{box-shadow:0 0 0 12px rgba(194,99,122,0)} }  
+    .click-ripple {
+      position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.7), transparent);
+      animation: rippleAnim 0.6s ease-out; pointer-events: none;
+    }
+    @keyframes rippleAnim { 0% { transform: scale(0); opacity: 0.7; } 100% { transform: scale(6); opacity: 0; } }
+    /* Mobile perfection */
+    @media (max-width: 768px) {
+      body { overflow-x: hidden; }
+      .container, .max-w-7xl, .max-w-5xl { padding-left: 1.25rem !important; padding-right: 1.25rem !important; width: 100%; }
+      section { padding: 3rem 1rem !important; }
+      .hidden.md\:flex, .hidden.md\:block { display: none !important; }
+      #mobile-menu-btn { display: flex !important; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+      .g-tall { grid-row: span 1 !important; height: auto; }
+      .g-wide { grid-column: span 1 !important; }
+      .hero .grid { gap: 1.5rem; }
+      h1 { font-size: 3rem !important; line-height: 1.2; }
+      .flex.gap-8 { flex-wrap: wrap; justify-content: center; }
+      .grad-btn, .btn-primary { width: auto; display: inline-flex; justify-content: center; }
+      .grid.md\:grid-cols-2, .grid.md\:grid-cols-3 { grid-template-columns: 1fr !important; gap: 1.5rem; }
+      .testimonial-card { padding: 1.5rem; }
+      .contact-link { padding: 1rem; }
+      .orb { opacity: 0.05; filter: blur(40px); }
+      .ring-anim, .ring-anim-rev { display: none; }
+      .marquee-track { font-size: 0.7rem; }
+      .stats-grid { flex-direction: column; align-items: center; text-align: center; }
+      .about-grid { flex-direction: column; gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 2.5rem !important; }
+      .grad-btn { padding: 0.75rem 1.5rem; font-size: 0.7rem; }
+      .service-card { padding: 1.5rem; }
+      .hero-gallery-mobile { margin-top: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="cursor-glow"></div>
+
+<!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/30 shadow-sm" style="box-shadow:0 4px 20px rgba(194,99,122,0.05)">
+  <nav class="flex justify-between items-center w-full px-5 py-3 max-w-screen-2xl mx-auto">
+    <div class="flex items-center gap-3">
+      <img src="https://res.cloudinary.com/ddr8ylakx/image/upload/v1775472212/472609355_1281383349746807_6567373445171693743_n_ybvxdv.jpg" alt="Elle Studio Logo" class="h-20 w-auto object-contain rounded-full">
+      <span class="font-serif italic text-lg text-primary font-semibold">Elle Studio</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase tracking-wide font-semibold" href="#about">About</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase tracking-wide font-semibold" href="#services">Services</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase tracking-wide font-semibold" href="#portfolio">Portfolio</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase tracking-wide font-semibold" href="#products">Products</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors text-xs uppercase tracking-wide font-semibold" href="#reviews">Reviews</a>
+    </div>
+    <a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="hidden md:block grad-btn text-white px-6 py-2.5 rounded-full text-xs uppercase tracking-wide font-bold book-pulse">Book Now</a>
+    <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1" aria-label="Menu">
+      <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden">
+    <div class="flex flex-col gap-2 px-5 py-5">
+      <a class="text-on-surface py-3 border-b border-primary/10 text-sm font-semibold uppercase tracking-wide" href="#about">About</a>
+      <a class="text-on-surface py-3 border-b border-primary/10 text-sm font-semibold uppercase tracking-wide" href="#services">Services</a>
+      <a class="text-on-surface py-3 border-b border-primary/10 text-sm font-semibold uppercase tracking-wide" href="#portfolio">Portfolio</a>
+      <a class="text-on-surface py-3 border-b border-primary/10 text-sm font-semibold uppercase tracking-wide" href="#products">Products</a>
+      <a class="text-on-surface py-3 border-b border-primary/10 text-sm font-semibold uppercase tracking-wide" href="#reviews">Reviews</a>
+      <a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="grad-btn text-white text-center py-3 rounded-full mt-3 text-sm font-bold">📸 DM to Book</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden grad-bg-hero pt-28 pb-12">
+  <div class="orb bg-primary w-[450px] h-[450px] -top-64 -left-48"></div><div class="orb bg-secondary w-[380px] h-[380px] top-1/3 -right-40"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-5 grid md:grid-cols-2 gap-10 items-center w-full">
+    <div class="text-left">
+      <div class="inline-flex items-center gap-3 glass rounded-full px-4 py-1.5 mb-6 reveal"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="text-primary text-[11px] uppercase tracking-wider font-bold">Now Accepting Bookings</span></div>
+      <h1 class="font-serif italic reveal" style="font-size:clamp(3rem,8vw,5.5rem);line-height:1.1"><span class="grad-text">Elle</span><br><span class="text-on-surface">Studio</span></h1>
+      <div class="shimmer-line my-5 max-w-[140px] reveal"></div>
+      <p class="text-on-surface-variant text-base font-light leading-relaxed max-w-md mb-8 reveal">Elevated artistry for the modern hand. A sanctuary of luxury, hygiene, and bespoke creativity — each set a wearable masterpiece.</p>
+      <div class="flex flex-wrap gap-4 reveal">
+        <a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="grad-btn text-white px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-wide inline-flex items-center gap-2 book-pulse">DM to Book ✦</a>
+        <a href="#portfolio" class="glass border border-primary/20 text-primary px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-wide hover:border-primary/50 transition-all">View Gallery →</a>
+      </div>
+      <div class="flex flex-wrap gap-6 mt-12 justify-start reveal">
+        <div><p class="font-serif italic text-2xl grad-text font-semibold" data-target="500">0+</p><p class="text-[11px] uppercase tracking-wider text-on-surface-variant">Happy Clients</p></div>
+        <div class="w-px h-8 bg-outline-variant"></div>
+        <div><p class="font-serif italic text-2xl grad-text font-semibold" data-target="5">0+</p><p class="text-[11px] uppercase tracking-wider text-on-surface-variant">Years Artistry</p></div>
+        <div class="w-px h-8 bg-outline-variant"></div>
+        <div><p class="font-serif italic text-2xl grad-text font-semibold">5k+</p><p class="text-[11px] uppercase tracking-wider text-on-surface-variant">Designs</p></div>
+      </div>
+    </div>
+    <div class="relative reveal-right">
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><div class="ring-anim w-[320px] h-[320px] rounded-full border-2 border-dashed border-primary/20 absolute"></div><div class="ring-anim-rev w-[260px] h-[260px] rounded-full border border-secondary/15 absolute"></div></div>
+      <div class="grid grid-cols-2 gap-3 relative z-10">
+        <div class="rounded-2xl overflow-hidden shadow-xl aspect-square"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIq9z4O3y2kRg16Zloa1y6kaVAjwXjrBzAh9UgrysIrQ-7or6_5hdi0JDXl_4BTklir2Cm3qYQAa5W3KLxn6a86qyoqGa9EbqUcTvfKKYBHCkM2f3Ayu4kJyN2HI6LGLhNeZdfz4vZV6c4FQcLDc6mpKBxoCR2f1hq330CFL7AZNZjlOLsPqeke0YbV-Jhhh0WZ9aZhT-3-FMtC-lefdQZcykZ-j5T6UOoi8pAnNxAWgfdnXF071DFz-KoKxl_LFv4v-4XgapT_vL2" class="w-full h-full object-cover"></div>
+        <div class="rounded-2xl overflow-hidden shadow-xl aspect-square"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPGpZItAC8s8X5llDi4nfvwlHkKVSkkd-_ZnjC3xqqeYNh8ve2e0zC0JWqkriWXvmGihPdyISKVRDUAwP0e2XIcMKzdMMmM48r_rwbZR1qtBAMGWU3GIQ0XoFNDc8YSRz5DAa_3RQ-j_INCcXw76MJB7F9QCBMhn9cNls7m8pj-5ud7yEjw61oaNVpKNUIShh6jh8puaPnyf5XdDj_7qHhMgyav1jYhcZ02i15ZbT3539h2AL7Jgi6th5kXQ2-bYrjx060CD9ctRj9" class="w-full h-full object-cover"></div>
+        <div class="col-span-2 rounded-2xl overflow-hidden shadow-xl aspect-[2/1]"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJspOx-Y8zOms-22xqBhC-DVaKf6kb1Jexwm0iS7lr45ojA-iC9qtVDPEh0I_2SQVJp9xwInyjzWpRbvHYP6nVIfr5JYKgLdHIKu5FO39c23JaodBMkVRspM0A_54DYKiCoCGGGZ7Dqt2eB-OpWayqa4t5M5_xcHxmYfqOMPc8q1miuz6Co2f73EOXA6PVQtGIzDpx9nat468bHdAzNHOHxF4GojYVlJZk7BA_QLaqhzElJcjzFjGmgRuwfGu3vXJnnTkGmeHE4DED" class="w-full h-full object-cover"></div>
+      </div>
+      <div class="absolute -bottom-4 -left-4 glass rounded-xl p-2 shadow-md animate-float"><p class="text-[10px] uppercase tracking-wider text-on-surface-variant">Avg. Rating</p><div class="flex items-center gap-1"><span class="font-serif text-lg text-primary font-semibold">4.9</span><span class="text-accent-gold text-xs">★★★★★</span></div></div>
+    </div>
+  </div>
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"><p class="text-[10px] uppercase tracking-widest text-on-surface-variant/50">Scroll</p><div class="w-px h-8 bg-gradient-to-b from-primary/60 to-transparent animate-pulse"></div></div>
+</section>
+
+<!-- Marquee -->
+<div class="overflow-hidden py-3 bg-primary/5 border-y border-primary/10"><div class="marquee-track text-[11px] uppercase tracking-[0.2em] text-primary/70 font-bold"><span class="mx-8">✦ Luxury Nail Extensions</span><span class="mx-8">✦ Gel Polish Collection</span><span class="mx-8">✦ Bespoke Nail Art</span><span class="mx-8">✦ Spa Manicure & Pedicure</span><span class="mx-8">✦ 100% Non-Toxic</span><span class="mx-8">✦ Premium Studio</span><span class="mx-8">✦ Luxury Nail Extensions</span><span class="mx-8">✦ Gel Polish Collection</span></div></div>
+
+<!-- About -->
+<section class="py-16 px-5 relative overflow-hidden" id="about"><div class="orb bg-secondary/30 w-[350px] h-[350px] top-0 right-0"></div>
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+    <div class="relative reveal-left"><div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"><img alt="studio" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPGpZItAC8s8X5llDi4nfvwlHkKVSkkd-_ZnjC3xqqeYNh8ve2e0zC0JWqkriWXvmGihPdyISKVRDUAwP0e2XIcMKzdMMmM48r_rwbZR1qtBAMGWU3GIQ0XoFNDc8YSRz5DAa_3RQ-j_INCcXw76MJB7F9QCBMhn9cNls7m8pj-5ud7yEjw61oaNVpKNUIShh6jh8puaPnyf5XdDj_7qHhMgyav1jYhcZ02i15ZbT3539h2AL7Jgi6th5kXQ2-bYrjx060CD9ctRj9"></div><div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-xl overflow-hidden shadow-xl border-2 border-white hidden md:block"><img alt="tools" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJspOx-Y8zOms-22xqBhC-DVaKf6kb1Jexwm0iS7lr45ojA-iC9qtVDPEh0I_2SQVJp9xwInyjzWpRbvHYP6nVIfr5JYKgLdHIKu5FO39c23JaodBMkVRspM0A_54DYKiCoCGGGZ7Dqt2eB-OpWayqa4t5M5_xcHxmYfqOMPc8q1miuz6Co2f73EOXA6PVQtGIzDpx9nat468bHdAzNHOHxF4GojYVlJZk7BA_QLaqhzElJcjzFjGmgRuwfGu3vXJnnTkGmeHE4DED"></div></div>
+    <div class="reveal-right"><span class="text-xs uppercase tracking-[0.3em] font-bold text-accent-gold">Philosophy</span><h2 class="font-serif italic text-3xl md:text-5xl mt-2">Curating Elegance,<br><span class="grad-text">One Hand at a Time.</span></h2><div class="shimmer-line max-w-[100px] my-4"></div><p class="text-on-surface-variant leading-relaxed text-base font-light">At Elle Studio, we believe that nail art is an editorial expression. Our studio is a sanctuary of hygiene and high-end creativity — every stroke intentional, every set a wearable work of art.</p>
+      <div class="grid grid-cols-2 gap-3 mt-6"><div class="glass-pink rounded-xl p-4"><span class="text-xl">✦</span><p class="text-xs font-bold text-primary mt-1">Premium Products</p><p class="text-[11px]">Professional-grade formulas</p></div><div class="glass-pink rounded-xl p-4"><span class="text-xl">🌸</span><p class="text-xs font-bold text-primary mt-1">Strict Hygiene</p><p class="text-[11px]">Sterilised tools, every visit</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="py-16 px-5 bg-surface-variant/30" id="services"><div class="max-w-7xl mx-auto"><div class="text-center mb-12 reveal"><span class="text-xs uppercase tracking-[0.3em] font-bold text-accent-gold">The Editorial Experience</span><h2 class="font-serif italic text-3xl md:text-5xl mt-2">Bespoke <span class="grad-text">Services</span></h2><div class="shimmer-line max-w-xs mx-auto mt-3"></div></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="service-card rounded-2xl p-6 reveal"><div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10"><span class="material-symbols-outlined text-primary">content_cut</span></div><h3 class="font-serif text-xl text-primary">Nail Extensions</h3><p class="text-sm text-on-surface-variant/70 my-3">Sculpted gel extensions, weightless & natural.</p><div class="flex justify-between items-center pt-3 border-t border-primary/10"><span class="text-xs uppercase tracking-wider">From</span><span class="font-serif text-primary">₹1,500+</span></div></div>
+      <div class="service-card rounded-2xl p-6 reveal"><div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-secondary/10"><span class="material-symbols-outlined text-secondary">brush</span></div><h3 class="font-serif text-xl text-primary">Gel Polish</h3><p class="text-sm text-on-surface-variant/70 my-3">High-shine, chip-free, 200+ shades.</p><div class="flex justify-between items-center pt-3 border-t border-primary/10"><span class="text-xs uppercase tracking-wider">From</span><span class="font-serif text-primary">₹800+</span></div></div>
+      <div class="service-card rounded-2xl p-6 reveal"><div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-accent-gold/10"><span class="material-symbols-outlined text-accent-gold">palette</span></div><h3 class="font-serif text-xl text-primary">Master Artistry</h3><p class="text-sm text-on-surface-variant/70 my-3">Bespoke hand-painted designs.</p><div class="flex justify-between items-center pt-3 border-t border-primary/10"><span class="text-xs uppercase tracking-wider">From</span><span class="font-serif text-primary">₹500+</span></div></div>
+      <div class="service-card rounded-2xl p-6 reveal"><div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-tertiary/10"><span class="material-symbols-outlined text-tertiary">spa</span></div><h3 class="font-serif text-xl text-primary">Spa Ritual</h3><p class="text-sm text-on-surface-variant/70 my-3">Sugar scrub + ceramide hydration.</p><div class="flex justify-between items-center pt-3 border-t border-primary/10"><span class="text-xs uppercase tracking-wider">From</span><span class="font-serif text-primary">₹1,200+</span></div></div>
+    </div>
+    <div class="text-center mt-10 reveal"><a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="grad-btn text-white px-8 py-3 rounded-full text-sm font-bold inline-flex items-center gap-2">DM for Full Menu →</a></div>
+  </div>
+</section>
+
+<!-- Portfolio Gallery -->
+<section class="py-16 px-5" id="portfolio"><div class="max-w-7xl mx-auto"><div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-4 reveal"><div><span class="text-xs uppercase tracking-[0.3em] font-bold text-accent-gold">Curated Portfolio</span><h2 class="font-serif italic text-3xl md:text-5xl mt-1">The <span class="grad-text">Gallery</span></h2><div class="shimmer-line max-w-[120px] mt-2"></div></div><a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="text-primary text-xs font-bold uppercase tracking-wider flex items-center gap-2 group">Explore @elle_studio___ <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition">arrow_right_alt</span></a></div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+      <div class="gallery-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfvlSx3Wo0yyuTMY5LMw0GtvHTVe_ngjv2Diyz7Y1woSzEtAuqNdDPVosRcCsbQUf1JOj3kJ_L_3MlG4xlLbN3jx4ICudApKR3g7JY_7FeQg7V7iv2CgM4yaw8RWTe__3Yb2OQISQlhMaW0Li3RPgdZt6_ALL2RZBdUGDgR2oPpg8temEaIRksDVOpq3QthMutMKATDmKiQtPLAVIwhaKl2UqHDsN7rdRoWKpfPR0BL-ifhWXgeSreRh1Fc_b8zKy1GhUaNh0wMlfq" alt="art"><div class="gallery-overlay"><span class="text-white text-xs font-serif">Metallic Editorial</span></div></div>
+      <div class="gallery-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL2s-uPhDE2Hk9MA-JV6LOqf4bEKYWJg1qSInKxUGp03pJZMs56196hNzbuPLYZFGnt2ZtwDMUZXSBOBNpiUd61lGAiay8P58Urzdk2ZmoT6pW420A5kz24CduUeCfw37yqxV7Ax1ns2FWNZC4E-vAucafN-Lo3C-BtDJfOL-F2KzJWA5M4JdOjGdcXA12js4N4lkdz0sfRkCLgGetX3qRcx5DrBhbUDmCDSdtqxztC_MOrk5ARgxUlbYrjv8etZfIZLi4hMdcfxol" alt="milky"><div class="gallery-overlay"><span class="text-white text-xs font-serif">Milky Glass</span></div></div>
+      <div class="gallery-item"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2z4PIkZHQu4tgLcrDr-syx8sDTEmSIEZxTanPcOF-N5Y606POvz25bocK0-KkTUFaDu9PL8vJ_X5eevlV7Qtr9Jq60Co0Viln5Z2MX9GN9Ns8W5pnzIIcWoYDplZ3QYbXZ15ECQ3qrqtj-SlSUoqEHG_LNH1ucv5paQqvCdeoFD90_Oi5_MGeJtjI5fM-_rA6g1l-gbs2cLN7UY8byQ98FQlQGeeHWwD7U7b_I4zVDj-QFep_eHMawSetYUfIr2Cmr5Z1ovbTI9Pz" alt="sage"><div class="gallery-overlay"><span class="text-white text-xs font-serif">Sage Dream</span></div></div>
+      <div class="gallery-item md:col-span-2"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBezNX_9I7dtqwPGsukDyirxfS7_SrNMpBJDUUYzK4N8uTQBreG2AbfcM75WFYZZDYZLYB0-JRkfTpEiMmD4vu3v0xLL0Bth-3WXTDVBjiGTzkfyaxAbDnVI_RUVo5KKBPcJkY5VzszGARHUBkmn3MnzKXOBtQayzQ4ySzEmudgclJ9u8zIfdzFwhaKfsE1SKS_6092YoZaenPHdDU1lzj4LKy8k7DQuWESIzZwpVBjUCaWcoKbsxz1M46BlFGQU8TLHrUuPL1pF41Z" alt="pastel"><div class="gallery-overlay"><span class="text-white text-xs font-serif">Pastel Collection</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="py-16 px-5 bg-surface-variant/20" id="products"><div class="max-w-7xl mx-auto"><div class="text-center mb-12 reveal"><span class="text-xs uppercase tracking-[0.3em] font-bold text-accent-gold">Studio Essentials</span><h2 class="font-serif italic text-3xl md:text-5xl mt-1">We Use Only <span class="grad-text">the Best</span></h2></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="product-card p-5 text-center reveal"><div class="aspect-square bg-white rounded-xl flex items-center justify-center p-4"><img alt="oil" class="w-28 h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzNrfAHA5yErZDvmSb2URnpiM8Hsu7vvbJVQZFvQ-Hnh7SrRLx0UZ-q6fKaJeL8puEwx_ADU89D0OGhUNGaznC_0Lx9UyvgKXAQCUVx3GapFBPpunrqqYAOhwRhs9uCFczDkw0pD2uiiiiFZtROWisicMwfuDAlz8H8wvPzd69ap_1Q06ElEej0dvii0YSxvLhbnVLX9VgTjRh9JXFwE7bDfx4u50W5j2NgyzFeteQwpFJRAI3qTzAdB2qgRfJus6UCiJkuaTJ2ZUo"></div><h3 class="font-serif text-primary text-xl mt-3">Botanical Serum</h3><p class="text-xs text-accent-gold font-bold mt-1">₹2,400</p><p class="text-xs uppercase tracking-wider text-primary/70 mt-2 opacity-0 group-hover:opacity-100 transition">Shop now →</p></div>
+      <div class="product-card p-5 text-center reveal"><div class="aspect-square bg-white rounded-xl flex items-center justify-center p-4"><img alt="polish" class="w-28 h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVJfFK99tdpnwkppqFD0x340jFi5G9NYLuFH4Zvl0Wd8vM_UPM5ZbtZzNuftaR8NAsKyhX8YaQ2f1EES7p5g2aJWRxvwklh_h9krsxTHf1H88j3pwIbJnJNIgaqPQ8L9bxd9JAouGRVO_LkV31a6ZEN21tNWlLsR2ssBH_9hfDw0jubce5S4V89avE8NhmQtZBv17WN5N8bO9hRXE5rgZ2p8LMkdLvEF3Qc32kDGTcA-ODwH02t2iIo0p7W8iGwrUZhCZZ0D8Bg91p"></div><h3 class="font-serif text-primary text-xl mt-3">Polish 'Blush'</h3><p class="text-xs text-accent-gold font-bold mt-1">₹1,800</p></div>
+      <div class="product-card p-5 text-center reveal"><div class="aspect-square bg-white rounded-xl flex items-center justify-center p-4"><img alt="cream" class="w-28 h-28 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTaMewLuptrSetcl3deXdJ_g-mB04piQH-F5eZsJklwvc9MHbQ5pIRzllvGqIQOvYcM70ktLV-Dcgfd6-gn-4Hxiot4JONFVQygSvRQFFxFYfjrsOSsbebwijrNT6LSVk746yDkAjAHrl5nH-PfKlvqEQQvyVq6Y38hpu-1-adQILUjtrBXw5SHpjwHPzqrarSt-bZ4hspT3ECfQhRu0Bh08O5RjtPqvJxduHL_T_3xxnACxDMY8-6Ec2ptSPr_WabCAUvhNppiTZJ"></div><h3 class="font-serif text-primary text-xl mt-3">Ceramide Ritual</h3><p class="text-xs text-accent-gold font-bold mt-1">₹2,100</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-16 px-5" id="reviews"><div class="max-w-7xl mx-auto"><div class="text-center mb-12 reveal"><span class="text-xs uppercase tracking-[0.3em] font-bold text-accent-gold">Client Love</span><h2 class="font-serif italic text-3xl md:text-5xl mt-1">What They <span class="grad-text">Say</span></h2><div class="flex justify-center gap-1 mt-3"><span class="text-accent-gold text-lg">★★★★★</span></div><p class="text-xs uppercase tracking-wide mt-2 font-bold text-on-surface-variant">4.9 / 5 Average Rating</p></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="testimonial-card p-6 reveal"><div class="text-4xl font-serif text-primary/20">"</div><div class="flex gap-0.5 mb-2"><span class="text-accent-gold text-sm">★★★★★</span></div><p class="font-serif italic text-on-surface-variant text-sm leading-relaxed">"The attention to detail is unmatched, and the studio atmosphere is pure luxury."</p><div class="flex items-center gap-3 pt-4 mt-3 border-t border-primary/10"><div class="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white text-xs">S</div><div><p class="text-xs font-bold">Sophie R.</p><p class="text-[10px] text-on-surface-variant/60">Regular Client</p></div></div></div>
+      <div class="testimonial-card p-6 reveal"><div class="text-4xl font-serif text-primary/20">"</div><div class="flex gap-0.5 mb-2"><span class="text-accent-gold text-sm">★★★★★</span></div><p class="font-serif italic text-on-surface-variant text-sm leading-relaxed">"Elle is a true artist. She created a masterpiece that stayed perfect for weeks."</p><div class="flex items-center gap-3 pt-4 mt-3 border-t border-primary/10"><div class="w-8 h-8 rounded-full bg-gradient-to-r from-secondary to-accent-gold flex items-center justify-center text-white text-xs">J</div><div><p class="text-xs font-bold">Jessica M.</p><p class="text-[10px] text-on-surface-variant/60">Nail Art Client</p></div></div></div>
+      <div class="testimonial-card p-6 reveal"><div class="text-4xl font-serif text-primary/20">"</div><div class="flex gap-0.5 mb-2"><span class="text-accent-gold text-sm">★★★★★</span></div><p class="font-serif italic text-on-surface-variant text-sm leading-relaxed">"The floral set she created for my wedding was breathtaking. Absolutely divine!"</p><div class="flex items-center gap-3 pt-4 mt-3 border-t border-primary/10"><div class="w-8 h-8 rounded-full bg-gradient-to-r from-accent-gold to-primary flex items-center justify-center text-white text-xs">P</div><div><p class="text-xs font-bold">Priya K.</p><p class="text-[10px] text-on-surface-variant/60">Bridal Client</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="py-16 px-5 relative overflow-hidden" style="background:linear-gradient(160deg,#2a1c20 0%,#3a1f2e 50%,#1e1a2e 100%)" id="contact"><div class="orb bg-primary w-[400px] h-[400px] top-0 left-0 opacity-10"></div><div class="max-w-5xl mx-auto relative z-10"><div class="text-center mb-10 reveal"><span class="text-xs uppercase tracking-[0.3em] font-bold text-accent-gold">Get in Touch</span><h2 class="font-serif italic text-3xl md:text-5xl text-white mt-2">Secure Your <span class="grad-text">Spot</span></h2><p class="text-white/50 text-sm mt-3 max-w-md mx-auto">Appointments limited — let's create your next masterpiece.</p></div>
+    <div class="glass-dark rounded-2xl p-6 mb-8 text-center reveal"><div class="inline-flex items-center gap-2 mb-2"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span><span class="text-green-400 text-[11px] uppercase tracking-wider font-bold">DM to Book Instantly</span></div><p class="text-white/60 text-xs mb-4">Fastest way — send your inspo and dates via Instagram.</p><a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="grad-btn inline-flex items-center gap-2 text-white px-6 py-3 rounded-full text-xs font-bold book-pulse">📸 DM @elle_studio___</a></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 reveal">
+      <a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="contact-link glass-dark rounded-xl p-4 flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-pink-600/30">📸</div><div><p class="text-white/40 text-[10px] uppercase">Instagram</p><p class="text-white text-sm">@elle_studio___</p></div></a>
+      <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="contact-link glass-dark rounded-xl p-4 flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-green-600/30">💬</div><div><p class="text-white/40 text-[10px] uppercase">WhatsApp</p><p class="text-white text-sm">DM for number</p></div></a>
+      <a href="#" class="contact-link glass-dark rounded-xl p-4 flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-amber-600/30">📍</div><div><p class="text-white/40 text-[10px] uppercase">Location</p><p class="text-white text-sm">Chennai, Tamil Nadu 🇮🇳</p></div></a>
+      <a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" target="_blank" class="contact-link glass-dark rounded-xl p-4 flex items-center gap-3"><div class="w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-purple-600/30">📞</div><div><p class="text-white/40 text-[10px] uppercase">Contact</p><p class="text-white text-sm">Via Instagram DM</p></div></a>
+    </div>
+    <p class="text-center text-white/25 text-[10px] mt-6">⚠️ Phone & WhatsApp available in Instagram bio → @elle_studio___</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-8 px-5 border-t border-outline-variant/30 bg-surface"><div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4"><div><div class="text-xl font-serif italic grad-text font-semibold">Elle Studio</div><p class="text-[10px] text-on-surface-variant/60 uppercase tracking-wider">Luxury Nail Art & Beauty</p></div><div class="flex gap-6"><a class="text-on-surface-variant/60 text-xs uppercase tracking-wide hover:text-primary" href="#about">About</a><a class="text-on-surface-variant/60 text-xs uppercase tracking-wide hover:text-primary" href="#services">Services</a><a class="text-on-surface-variant/60 text-xs uppercase tracking-wide hover:text-primary" href="#portfolio">Gallery</a></div><div class="flex gap-4"><a href="https://www.instagram.com/elle_studio___?igsh=MWZ1bWMwOWIzZWx6Mg==" class="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center text-white text-sm">📸</a><a href="https://wa.me/91XXXXXXXXXX" class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm">💬</a><p class="text-on-surface-variant/30 text-[11px]">© 2025</p></div></div></footer>
+
+<script>
+  // Cursor & interactions
+  const glow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+  const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+  // Counter
+  function animateCounter(el, target) { let start = 0; const step = target / 70; const timer = setInterval(() => { start = Math.min(start + step, target); el.textContent = Math.floor(start) + '+'; if (start >= target) clearInterval(timer); }, 20); }
+  const statObserver = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting) { animateCounter(entry.target, parseInt(entry.target.dataset.target)); statObserver.unobserve(entry.target); } }); }, { threshold: 0.5 });
+  document.querySelectorAll('[data-target]').forEach(el => statObserver.observe(el));
+  // Mobile menu
+  const menuBtn = document.getElementById('mobile-menu-btn'), mobileMenu = document.getElementById('mobile-menu');
+  if(menuBtn) menuBtn.addEventListener('click', () => { menuBtn.classList.toggle('active'); mobileMenu.classList.toggle('hidden'); });
+  document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => { menuBtn.classList.remove('active'); mobileMenu.classList.add('hidden'); }));
+  // Ripple effect on interactive
+  const addRipple = (selector) => document.querySelectorAll(selector).forEach(el => el.addEventListener('click', (e) => { const rect = el.getBoundingClientRect(); const x = e.clientX - rect.left, y = e.clientY - rect.top; const ripple = document.createElement('span'); ripple.className = 'click-ripple'; ripple.style.left = x + 'px'; ripple.style.top = y + 'px'; ripple.style.width = '20px'; ripple.style.height = '20px'; ripple.style.marginLeft = '-10px'; ripple.style.marginTop = '-10px'; el.style.position = 'relative'; el.style.overflow = 'hidden'; el.appendChild(ripple); setTimeout(() => ripple.remove(), 600); }));
+  addRipple('nav a, .grad-btn, .service-card, .product-card, .testimonial-card, .contact-link, .gallery-item');
+</script>
+</body>
+</html>
